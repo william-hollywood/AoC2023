@@ -99,20 +99,17 @@ variable max-green
         get-len-remaining 0=
     until
     \ check if max recorded exceeds limit
-    max-red @ 12 > ( rmax<rlim )
-    max-blue @ 14 > ( bmax<blim )
-    max-green @ 13 > ( gmax<glim )
-    or or invert
+    max-red @
+    max-blue @
+    max-green @
+    * *
+    sum @ + sum !
     ;
-
-: add-id ( id possible -- )
-    if sum @ + sum ! else drop endif ;
 
 : process-line ( -- )
     ." Processing: " load-from-cursor type cr
-    get-game-id     ( id )
-    process-game    ( id possible )
-    add-id          ( -- )
+    get-game-id drop ( )
+    process-game    ( power )
     ;
 
 : process-file ( -- )
